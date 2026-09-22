@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+# This is the part of the demo your audience actually watches run live:
+# push a commit -> this workflow lights up in the "Actions" tab on GitHub.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build passed
+        run: echo "Build and tests passed. Render/Railway/Vercel will auto-deploy this commit."
+
+      # --- Optional: trigger a deploy hook directly from this pipeline -----
+      # If you'd rather have GitHub Actions explicitly trigger the deploy
+      # (instead of relying on your host's own GitHub auto-deploy), add a
+      # repo secret called RENDER_DEPLOY_HOOK_URL (Render gives you this
+      # URL under Settings > Deploy Hook) and uncomment the step below.
+      #
+      # - name: Trigger deploy hook
+      #   run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
