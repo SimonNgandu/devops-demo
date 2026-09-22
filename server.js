@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 // Change these two values (locally, or as env vars on your host) to show
 // a "live" change moving through the pipeline during your demo.
-const VERSION = process.env.APP_VERSION || '1.1.0';
+const VERSION = process.env.APP_VERSION || '1.0.0';
 const COLOR = process.env.APP_COLOR || '#0B2545'; // navy, matches the deck
 
 app.get('/', (req, res) => {
